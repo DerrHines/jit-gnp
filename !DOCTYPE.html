@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primo Water - Costco Partnership</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background: #E6F0FA;
+            color: #003087;
+        }
+        header {
+            padding: 15px 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 30px;
+            border: 2px solid #003087;
+            border-radius: 10px;
+            background: #FFFFFF;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2em;
+            color: #003087;
+            margin-bottom: 10px;
+        }
+        .partnership {
+            font-size: 1.1em;
+            color: #005566;
+            margin-bottom: 20px;
+        }
+        .columns {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .column {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid #FFD700;
+            border-radius: 5px;
+            background: #F7FAFF;
+        }
+        input, select, button, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #A3BFFA;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: #003087;
+            outline: none;
+        }
+        button {
+            background: #003087;
+            color: #FFD700;
+            font-weight: bold;
+            cursor: pointer;
+            border: 1px solid #FFD700;
+            padding: 12px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #002366;
+        }
+        .highlight {
+            color: #003087;
+            font-weight: bold;
+        }
+        .note {
+            color: #555;
+            font-size: 0.9em;
+            margin: 15px 0;
+        }
+        .delivery-info {
+            font-size: 0.95em;
+            color: #333;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        #orderSummary {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px dashed #003087;
+            background: #F7FAFF;
+            text-align: left;
+        }
+        #confirmation {
+            margin-top: 20px;
+            padding: 15px;
+            background: #E6F7E6;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            color: #003087;
+            font-size: 1.1em;
+            text-align: center;
+            display: none;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #FFD700;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+            display: none;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @media (max-width: 600px) {
+            .columns { 
+                flex-direction: column; 
+            }
+            .column {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="jit.png" alt="jit.png" width="150">
+    </header>
+    <h1>Primo Water Delivery</h1>
+    <div class="container">
+        <p class="partnership">In Partnership with Costco</p>
+        <!-- UPDATED FORM WITH FORMSPREE URL -->
+        <form id="orderForm" action="https://formspree.io/f/xeoalnal" method="POST">
+            <label for="costco">Costco Membership Number (Required for Discount):</label>
+            <input type="text" id="costco" name="costco" placeholder="Enter 12-digit Costco Membership #" required>
+            
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
+            
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
+            
+            <label for="dayPhone">Daytime Phone:</label>
+            <input type="tel" id="dayPhone" name="dayPhone" placeholder="123-456-7890" required>
+            
+            <label for="nightPhone">Evening Phone (Optional):</label>
+            <input type="tel" id="nightPhone" name="nightPhone" placeholder="123-456-7890">
+            
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" placeholder="example@email.com" required>
+            
+            <label for="commercial">Account Type:</label>
+            <select id="commercial" name="commercial">
+                <option value="No">Residential</option>
+                <option value="Yes">Commercial</option>
+            </select>
+            
+            <div id="businessNameDiv" style="display:none;">
+                <label for="businessName">Business Name:</label>
+                <input type="text" id="businessName" name="businessName" placeholder="Business Name">
+            </div>
+            
+            <label for="address">Delivery Address:</label>
+            <input type="text" id="address" name="address" placeholder="Street Address" required>
+            <input type="text" id="city" name="city" placeholder="City" required>
+            <input type="text" id="state" name="state" placeholder="State" required>
+            <input type="text" id="zip" name="zip" placeholder="Zip Code" required>
+            
+            <label for="billingAddress">Use a Different Billing Address?</label>
+            <select id="billingAddress" name="billingAddress">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+            </select>
+            
+            <div id="billingDiv" style="display:none;">
+                <label for="billing">Billing Address:</label>
+                <input type="text" id="billing" name="billing" placeholder="Street Address">
+                <input type="text" id="billingCity" name="billingCity" placeholder="City">
+                <input type="text" id="billingState" name="billingState" placeholder="State">
+                <input type="text" id="billingZip" name="billingZip" placeholder="Zip Code">
+            </div>
+
+            <div class="columns">
+                <div class="column">
+                    <h3>Water Order (Required)</h3>
+                    <label for="waterType">Water Type:</label>
+                    <select id="waterType" name="waterType" required>
+                        <option value="" disabled selected>Select Water Type</option>
+                        <option value="Purified Water">Purified Water - $7.49/5 Gal</option>
+                        <option value="Spring Water">Spring Water - $8.49/5 Gal</option>
+                        <option value="Alkaline Water">Alkaline Water - $13.99/3 Gal</option>
+                    </select>
+                    
+                    <label for="waterQuantity">Quantity (Min. 2):</label>
+                    <input type="number" id="waterQuantity" name="waterQuantity" min="2" placeholder="2" required>
+                </div>
+                
+                <div class="column">
+                    <h3>Dispenser Selection</h3>
+                    <label for="dispenserType">Dispenser Type:</label>
+                    <select id="dispenserType" name="dispenserType" required>
+                        <option value="" disabled selected>Select Dispenser Type</option>
+                        <option value="None">None - Water Only</option>
+                        <option value="HotCold Dispenser">Bottom-Loading Hot & Cold Dispenser - $5.99/mo (3 mo Free)</option>
+                        <option value="Coffee Dispenser">Bottom-Loading Coffee Pod Brewer Dispenser - $11.99/mo</option>
+                    </select>
+                    
+                    <label for="dispenserQuantity">Quantity:</label>
+                    <input type="number" id="dispenserQuantity" name="dispenserQuantity" min="0" placeholder="0" value="0">
+                </div>
+            </div>
+            
+            <div id="orderSummary">
+                <h3>Order Summary</h3>
+                <p id="summaryWater">Water: 0 bottles</p>
+                <p id="summaryDispenser">Dispenser: None</p>
+                <p id="summaryTotal">Total: $0.00</p>
+            </div>
+            
+            <label for="delivery">Delivery Frequency:</label>
+            <select id="delivery" name="delivery" required>
+                <option value="2 weeks">Every 2 Weeks</option>
+                <option value="4 weeks">Every 4 Weeks</option>
+                <option value="8 weeks">Every 8 Weeks</option>
+            </select>
+            
+            <p class="delivery-info">We’ll deliver your water as often as you need and pickup your empty bottles. Edit your order at anytime on our app.</p>
+            
+            <label for="deliveryNotes">Delivery Instructions:</label>
+            <textarea id="deliveryNotes" name="deliveryNotes" placeholder="E.g., 'Leave at front door' or 'Contact to pause delivery later'"></textarea>
+            
+            <p class="note">First order includes a <span class="highlight">$5 deposit</span> per bottle, refunded after cancellation. Delivery fee: <span class="highlight">$13.99</span> per delivery. No contract—pause or cancel anytime.</p>
+            
+            <div id="loader" class="loader"></div>
+            <button type="submit">Place Order</button>
+        </form>
+        <p id="confirmation">Your order has been successfully submitted (please check your email for further instruction)</p>
+    </div>
+
+    <script>
+        // Costco Membership Validation (12 digits)
+        document.getElementById("costco").addEventListener("input", function() {
+            const costcoNumber = this.value.replace(/\D/g, "");
+            if (costcoNumber.length !== 12) {
+                this.setCustomValidity("Costco Membership # must be 12 digits.");
+            } else {
+                this.setCustomValidity("");
+            }
+        });
+
+        // Dynamic Order Summary
+        function updateOrderSummary() {
+            const waterType = document.getElementById("waterType").value;
+            const waterQty = parseInt(document.getElementById("waterQuantity").value) || 0;
+            const dispenserType = document.getElementById("dispenserType").value;
+            const dispenserQty = parseInt(document.getElementById("dispenserQuantity").value) || 0;
+
+            const prices = {
+                "Purified Water": 7.49,
+                "Spring Water": 8.49,
+                "Alkaline Water": 13.99,
+                "HotCold Dispenser": 5.99,
+                "Coffee Dispenser": 11.99
+            };
+
+            const waterTotal = waterQty * (waterType ? prices[waterType] : 0);
+            const dispenserTotal = dispenserQty * (dispenserType.includes("Dispenser") ? prices[dispenserType] : 0);
+            const deliveryFee = 13.99;
+            const total = waterTotal + dispenserTotal + deliveryFee;
+
+            document.getElementById("summaryWater").textContent = 
+                `Water: ${waterQty} x ${waterType || "Not Selected"} ($${waterTotal.toFixed(2)})`;
+            document.getElementById("summaryDispenser").textContent = 
+                `Dispenser: ${dispenserQty} x ${dispenserType || "None"} ($${dispenserTotal.toFixed(2)})`;
+            document.getElementById("summaryTotal").textContent = 
+                `Total (incl. $${deliveryFee.toFixed(2)} delivery): $${total.toFixed(2)}`;
+        }
+
+        // Update summary on changes
+        ["waterType", "waterQuantity", "dispenserType", "dispenserQuantity"].forEach(id => {
+            document.getElementById(id).addEventListener("change", updateOrderSummary);
+        });
+
+        // Show confirmation after Formspree submission
+        document.getElementById("orderForm").addEventListener("submit", function() {
+            document.getElementById("loader").style.display = "block";
+            setTimeout(() => {
+                document.getElementById("confirmation").style.display = "block";
+                window.scrollTo(0, document.body.scrollHeight);
+            }, 1500);
+        });
+
+        // Toggle business name field
+        document.getElementById("commercial").addEventListener("change", function() {
+            document.getElementById("businessNameDiv").style.display = this.value === "Yes" ? "block" : "none";
+        });
+
+        // Toggle billing address field
+        document.getElementById("billingAddress").addEventListener("change", function() {
+            document.getElementById("billingDiv").style.display = this.value === "Yes" ? "block" : "none";
+        });
+
+        // Initialize order summary
+        updateOrderSummary();
+    </script>
+</body>
+</html>
